@@ -1,0 +1,49 @@
+﻿@page "/set-params-async/{Param?}"
+
+@using System.Net.Http
+@inject HttpClient Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+@using AppDomain.Model
+
+<h3>Список пользователей</h3>
+<p>@MessageAdd</p>
+
+@if (fulfil && persons == null)
+{
+    <p>Пользователи отсутствуют.</p>
+}
+else if (!fulfil && persons == null)
+{
+    <p>Идет загрузка...</p>
+}
+
+@if (persons != null)
+{
+    <ul>
+        @foreach (var person in persons)
+        {
+            <li>@person.Id.ToString()</li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public string MessageAdd { get; set; }
+
+    private IEnumerable<Individual> persons;
+    private bool fulfil = false;
+
+    protected override async Task OnParametersSetAsync() =>
+        persons = await Http.GetFromJsonAsync<Individual[]>
+            ("https://localhost:7279/api/Individual");
+
+    protected override async Task OnInitializedAsync()
+    {
+        persons = await Http.GetFromJsonAsync<IEnumerable<Individual>>
+            ("https://localhost:7279/api/Individual");
+        fulfil = true;
+    }
+}
+
