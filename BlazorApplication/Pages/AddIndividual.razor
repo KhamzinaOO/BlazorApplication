@@ -407,9 +407,9 @@
 
 
 @code {
-    string message="";
+    string message = "";
 
-    Individual individual;
+    Individual individual=new Individual();
 
     async Task submitAll()
     {
@@ -489,7 +489,7 @@
     {
         listEducation.Add(education);
         education = new EducationsDto();
-        foreach(var education in listEducation)
+        foreach (var education in listEducation)
         {
             message += education.Type;
         }

@@ -2,13 +2,15 @@
 
 <PageTitle>Index</PageTitle>
 
-<IndividualsListComponent MessageAdd=@Message />
+<input type="text" @bind-value="@SearchTerm" />
+
+@if(SearchTerm == ""){
+<IndividualsListComponent/>
+} else{
+    <SearchByName MessageAdd=@SearchTerm />
+}
+
 
 @code {
-    string Message { get; set; } = "";
-
-    void ToMessage(string message1)
-    {
-        Message = message1;
-    }
+    string SearchTerm { get; set; } = "";
 }
