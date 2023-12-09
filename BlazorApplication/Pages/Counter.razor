@@ -1,14 +1,18 @@
 ﻿@page "/counter"
 
-<PageTitle>Counter</PageTitle>
-
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<form>
+    <fieldset>
+        <legend>Контактная информация</legend>
+        <p><label for="name">Имя <em>*</em></label><input type="text" id="name"></p>
+        <p><label for="email">E-mail</label><input type="email" id="email"></p>
+    </fieldset>
+    <p><input type="submit" value="Отправить"></p>
+</form>
 
 @code {
+    
     private int currentCount = 0;
 
     private void IncrementCount()

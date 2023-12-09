@@ -1,57 +1,285 @@
-﻿@page "/fetchdata"
+﻿@page "/fetchdata/{Id:guid}"
+@using AppDomain.Model;
 @inject HttpClient Http
+@inject NavigationManager Navigation
+
+<style type="text/css">
+    #table_data {
+        background-color: #f5f8fa;
+        border: 1px solid #bbbbbf;
+        border-radius: 15px;
+        width: 1500px;
+        height: auto;
+        right:50%;
+        left:50%;
+    }
+    #btn{
+        margin:15px;
+    }
+
+</style>
 
 <PageTitle>Weather forecast</PageTitle>
 
-<h1>Weather forecast</h1>
+<h1>User Id: @Id</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
 
-@if (forecasts == null)
+@if (individual == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table">
+    <div id="table_data">
+    <button class="btn btn-danger" type="button" @onclick="Delete_Click" id="btn">
+        Delete
+    </button>
+        <button class="btn btn-info" type="button" @onclick="Update_Click" id="btn">
+        Update
+    </button>
+    <table class="table" border="1">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th align="center">ID</th>
+                <th align="center">@individual.Id</th>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+                <th colspan="2", align="center">Контактные данные</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            <tr>
+                <td> Ф.И.О </td>
+                <td>@individual.InformationDto.Name</td>
+            </tr>
+            <tr>
+                <td> Пол </td>
+                <td>@individual.InformationDto.Gender</td>
+            </tr>
+            <tr>
+                <td> Номер телефона </td>
+                <td>@individual.InformationDto.Phone</td>
+            </tr>
+            <tr>
+                <td> E-mail </td>
+                <td>@individual.InformationDto.Email</td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <th colspan="2" align="center">Образование</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var education in individual.EducationsDtOs)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td colspan="2"> Образование №@IncrementCountEducation() </td>
+                </tr>
+                <tr>
+                    <td> Тип образования </td>
+                    <td>@education.Type</td>
+                </tr>
+                <tr>
+                    <td> Организация </td>
+                    <td>@education.Institution</td>
+                </tr>
+                <tr>
+                    <td> Дата окончания </td>
+                    <td>@education.Date.ToString("dd/MM/yyyy")</td>
                 </tr>
             }
         </tbody>
+        <thead>
+            <tr>
+                <th colspan="2" align="center">Опыт работы</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job in individual.JobsDtOs)
+            {
+                <tr>
+                    <td colspan="2">  №@IncrementCountJobs() </td>
+                </tr>
+                <tr>
+                    <td> Должность </td>
+                    <td>@job.Position</td>
+                </tr>
+                <tr>
+                    <td> Организация </td>
+                    <td>@job.Organization</td>
+                </tr>
+            }
+        </tbody>
+        <thead>
+            <tr>
+                <th colspan="2" align="center">Место жительства</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                <tr>
+                    <td> Постоянная регистрация </td>
+                    <td>@individual.PersonAddressDto.AddressPermanentRegistration</td>
+                </tr>
+            @if (individual.PersonAddressDto.AddressTemporaryRegistration != null)
+            {
+                <tr>
+                    <td> Временная регистрация </td>
+                    <td>@individual.PersonAddressDto.AddressTemporaryRegistration</td>
+                </tr>
+            }
+        </tbody>
+        <thead>
+            <tr>
+                <th colspan="2" align="center">Документы</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var document in individual.DocumentsDtOs)
+            {
+                <tr>
+                    <td colspan="2">  №@IncrementDocument() </td>
+                </tr>
+                <tr>
+                    <td> Тип документа </td>
+                    <td>@document.DocumentName</td>
+                </tr>
+                <tr>
+                    <td> Номер документа </td>
+                    <td>@document.DocumentNumber</td>
+                </tr>
+            }
+        </tbody>
+        @if (individual.RussianPassportDto.DocumentSeries != "")
+        {
+            <thead>
+                <tr>
+                    <th colspan="2" align="center">Паспорт гражданина РФ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                        <td> Серия   Номер </td>
+                        <td>@individual.RussianPassportDto.DocumentSeries</td>
+                    </tr>
+                    <tr>
+                        <td> Выдан </td>
+                        <td>@individual.RussianPassportDto.DocumentIssuer</td>
+                    </tr>
+                    <tr>
+                        <td> Код подразделения </td>
+                        <td>@individual.RussianPassportDto.DocumentIssuerCode</td>
+                    </tr>
+                    <tr>
+                        <td> Дата выдачи </td>
+                    <td>@individual.RussianPassportDto.DocumentDate.ToString("dd/MM/yyyy")</td>
+                    </tr>
+            </tbody>
+            }
+            @if (individual.InternationalPassportDto.DocumentSeries != "")
+            {
+                <thead>
+                    <tr>
+                        <th colspan="2" align="center">Загранпаспорт</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> Серия   Номер </td>
+                        <td>@individual.InternationalPassportDto.DocumentSeries</td>
+                    </tr>
+                    <tr>
+                        <td> Выдан </td>
+                        <td>@individual.InternationalPassportDto.DocumentIssuer</td>
+                    </tr>
+                    <tr>
+                        <td> Код подразделения </td>
+                    <td>@individual.InternationalPassportDto.DocumentDateOfIssue.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td> Дата выдачи </td>
+                    <td>@individual.InternationalPassportDto.DocumentExpirationDate.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                </tbody>
+        }
+        @if (individual.ForeignPassportDto.DocumentCountry != "")
+        {
+            <thead>
+                <tr>
+                    <th colspan="2" align="center">Паспорт иностранного гражданина</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> Серия   Номер </td>
+                    <td>@individual.ForeignPassportDto.DocumentSeries</td>
+                </tr>
+                <tr>
+                    <td> Выдан </td>
+                    <td>@individual.ForeignPassportDto.DocumentCountry</td>
+                </tr>
+                <tr>
+                    <td> Код подразделения </td>
+                    <td>@individual.ForeignPassportDto.DocumentDate.ToString("dd/MM/yyyy")</td>
+                </tr>
+            </tbody>
+        }
     </table>
+    </div>
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    [Parameter]
+    public Guid Id { get; set; }
+
+    public int educationCount = 0;
+    public int jobsCount = 0;
+    public int documentsCount = 0;
+
+    public int IncrementCountEducation()
+    {
+        return educationCount++;
+    }
+    public int IncrementCountJobs()
+    {
+        return jobsCount++;
+    }
+    public int IncrementDocument()
+    {
+        return documentsCount++;
+    }
+}
+
+@code {
+    private Individual individual;
+
+    protected override async Task OnParametersSetAsync() =>
+        individual = await Http.GetFromJsonAsync<Individual>
+            ($"https://localhost:7279/api/Individual/{Id}");
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        individual = await Http.GetFromJsonAsync<Individual>
+            ($"https://localhost:7279/api/Individual/{Id}");
     }
 
-    public class WeatherForecast
+
+}
+
+@code {
+
+    protected async Task Delete_Click()
     {
-        public DateOnly Date { get; set; }
+        await Http.DeleteAsync($"https://localhost:7279/api/Individual/{Id}");
+        Navigation.NavigateTo("/");
+    }
 
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    protected async Task Update_Click()
+    {
+        Navigation.NavigateTo($"/test/{individual.Id}");
     }
 }
+
