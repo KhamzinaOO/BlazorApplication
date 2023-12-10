@@ -2,7 +2,39 @@
 
 <PageTitle>Index</PageTitle>
 
-<input type="text" @bind-value="@SearchTerm" class="form-control" />
+<style type="text/css">
+
+    #searchBox {
+        background-color: #f5f5f5;
+        border: 1px solid #ded9d9;
+        border-radius: 10px;
+        width: fit-content;
+        padding: 10px;
+        margin-right: 50px;
+        float:right;
+    }
+
+    #searchPannel {
+        margin: 15px;
+        float: right;
+    }
+    #searchText{
+        margin: 15px;
+        margin-right:0px;
+        float: right;
+    }
+</style>
+
+<div id="searchBox">
+    <div id="searchPannel">
+        <input type="text" @bind-value="@SearchTerm" class="form-control" />
+    </div>
+    <div id="searchText">
+        <p>Поиск по полному имени:</p>
+    </div>
+</div>
+
+
 
 @if(SearchTerm == ""){
 <IndividualsListComponent/>

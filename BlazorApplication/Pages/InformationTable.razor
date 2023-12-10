@@ -1,4 +1,4 @@
-﻿@page "/fetchdata/{Id:guid}"
+﻿@page "/informationTable/{Id:guid}"
 @using AppDomain.Model;
 @inject HttpClient Http
 @inject NavigationManager Navigation
@@ -279,7 +279,7 @@ else
 
     protected async Task Update_Click()
     {
-        Navigation.NavigateTo($"/test/{individual.Id}");
+        Navigation.NavigateTo($"/editIndividual/{individual.Id}");
     }
 }
 

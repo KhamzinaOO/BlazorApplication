@@ -16,6 +16,7 @@
         width: auto;
         padding-right: 10px;
         padding-left: 10px;
+        margin-top: 120px;
         margin-left:250px;
         margin-right: 250px;
         font-size: 19px;
@@ -26,9 +27,7 @@
     }
 </style>
 
-<h3>Список физических лиц</h3>
 <p>@MessageAdd</p>
-
 @if (fulfil && individuals == null)
 {
     <p>Пользователи отсутствуют.</p>
@@ -51,7 +50,7 @@ else if (!fulfil && individuals == null)
             {
                 <tr>
                     <td>
-                        <a href="/fetchdata/@individual.Id">@individual.Id</a>
+                        <a href="/informationTable/@individual.Id">@individual.Id</a>
                     </td>
                     <td>
                         @individual.InformationDto.Name
