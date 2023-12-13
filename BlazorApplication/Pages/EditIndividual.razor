@@ -45,7 +45,7 @@
         <div id="element">
             <EditForm Model="@info">
                 <p>
-                    <b>Контактные данные*</b>
+                    <b>Контактные данные</b>
                 </p>
                 <p>
                     Имя:<br />
@@ -69,7 +69,7 @@
         <div id="element">
             <EditForm Model="@education" OnSubmit="Submit2">
                 <p>
-                    <b>Образование*</b>
+                    <b>Образование</b>
                 </p>
                 <p>
                     Тип образования:<br />
@@ -93,7 +93,7 @@
         <div id="element">
             <EditForm Model="@job" OnSubmit="Submit3">
                 <p>
-                    <b>Опыт работы*</b>
+                    <b>Опыт работы</b>
                 </p>
                 <p>
                     Должность:<br />
@@ -132,7 +132,7 @@
         <div id="element">
             <EditForm Model="@document" OnSubmit="Submit5">
                 <p>
-                    <b>Документы*</b>
+                    <b>Документы</b>
                 </p>
                 <p>
                     Название документа:<br />
@@ -287,6 +287,10 @@
                     <td> Организация </td>
                     <td>@job.Organization</td>
                 </tr>
+                <button type="button" id="btnSubmit" class="btn btn-secondary btn-sm"
+                @onclick="@(e=>listDocuments.Remove(document))">
+                    Удалить
+                </button>
             }
         </tbody>
         <thead>
@@ -324,6 +328,9 @@
                     <td> Номер документа </td>
                     <td>@document.DocumentNumber</td>
                 </tr>
+                    <button type="button" id="btnSubmit" class="btn btn-secondary btn-sm" 
+                            @onclick="@(e=>listDocuments.Remove(document))">
+                        Удалить</button>
             }
         </tbody>
         @if (rusPassport.DocumentSeries != "")

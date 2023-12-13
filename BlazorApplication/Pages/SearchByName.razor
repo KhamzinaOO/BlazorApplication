@@ -43,6 +43,15 @@ else if (!fulfil && individuals == null)
                     <th colspan="2">Физические лица:</th>
                 </tr>
             </thead>
+            @if (individuals.Count() == 0)
+            {
+                <tr align="center">
+                    <td colspan="2">
+                        <p>Пользователи не найдены</p>
+                    </td>
+                </tr>
+                
+            }else
             @foreach (var individual in individuals)
             {
                 <tr>
