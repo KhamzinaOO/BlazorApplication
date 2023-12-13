@@ -31,11 +31,11 @@
 else
 {
     <div id="table_data">
-    <button class="btn btn-danger" type="button" @onclick="Delete_Click" id="btn">
-        Delete
+        <button class="btn btn-outline-danger" type="button" @onclick="Delete_Click" id="btn">
+        Удалить
     </button>
-        <button class="btn btn-info" type="button" @onclick="Update_Click" id="btn">
-        Update
+        <button class="btn btn-outline-info" type="button" @onclick="Update_Click" id="btn">
+        Изменить
     </button>
     <table class="table" border="1">
         <thead>
@@ -76,7 +76,7 @@ else
             @foreach (var education in individual.EducationsDtOs)
             {
                 <tr>
-                    <td colspan="2"> Образование №@IncrementCountEducation() </td>
+                    <td colspan="2"> Образование №@(educationCount++) </td>
                 </tr>
                 <tr>
                     <td> Тип образования </td>
@@ -101,7 +101,7 @@ else
             @foreach (var job in individual.JobsDtOs)
             {
                 <tr>
-                    <td colspan="2">  №@IncrementCountJobs() </td>
+                        <td colspan="2">  №@(jobsCount++) </td>
                 </tr>
                 <tr>
                     <td> Должность </td>
@@ -141,7 +141,7 @@ else
             @foreach (var document in individual.DocumentsDtOs)
             {
                 <tr>
-                    <td colspan="2">  №@IncrementDocument() </td>
+                        <td colspan="2">  №@(documentsCount++) </td>
                 </tr>
                 <tr>
                     <td> Тип документа </td>
@@ -238,19 +238,6 @@ else
     public int educationCount = 0;
     public int jobsCount = 0;
     public int documentsCount = 0;
-
-    public int IncrementCountEducation()
-    {
-        return educationCount++;
-    }
-    public int IncrementCountJobs()
-    {
-        return jobsCount++;
-    }
-    public int IncrementDocument()
-    {
-        return documentsCount++;
-    }
 }
 
 @code {

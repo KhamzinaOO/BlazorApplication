@@ -68,7 +68,7 @@
             </EditForm>
         </div>
         <div id="element">
-            <EditForm Model="@education" OnSubmit="Submit2">
+            <EditForm Model="@education" OnSubmit="@(e=>listEducation.Add(education))">
                 <p>
                     <b>Образование</b>
                 </p>
@@ -86,13 +86,16 @@
                 </p>
                 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                 <button type="button" class="btn btn-secondary btn-sm"
-                @onclick="AddEducation">
+                @onclick="@(e=>{
+                    listEducation.Add(education);
+                    education = new EducationsDto();
+                    })">
                     Добавить еще
                 </button>
             </EditForm>
         </div>
         <div id="element">
-            <EditForm Model="@job" OnSubmit="Submit3">
+            <EditForm Model="@job" OnSubmit="@(e=>listJobs.Add(job))">
                 <p>
                     <b>Опыт работы</b>
                 </p>
@@ -106,7 +109,10 @@
                 </p>
                 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                 <button type="button" class="btn btn-secondary btn-sm"
-                @onclick="AddJob">
+                @onclick="@(e=>{
+                    listJobs.Add(job);
+                    job = new JobsDto();
+                    })">
                     Добавить еще
                 </button>
             </EditForm>
@@ -131,7 +137,7 @@
     </div>
     <div id="edit_form">
         <div id="element">
-            <EditForm Model="@document" OnSubmit="Submit5">
+            <EditForm Model="@document" OnSubmit="@(e=>listDocuments.Add(document))">
                 <p>
                     <b>Документы</b>
                 </p>
@@ -145,7 +151,10 @@
                 </p>
                 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                 <button type="button" class="btn btn-secondary btn-sm"
-                @onclick="AddDocument">
+                @onclick="@(e=>{
+                    listDocuments.Add(document);
+                    document = new DocumentsDto();
+                    })">
                     Добавить еще
                 </button>
             </EditForm>
@@ -215,9 +224,9 @@
                 </p>
             </EditForm>
         </div>
+        <div style="color:red;" float="left">@message</div>
     </div>
-    <button type="button" id="btnSubmit" class="btn btn-outline-success" @onclick="submitAll">Подтвердить</button>
-    <div style="color:red;" float="left">@message</div>
+    <button type="button" id="btnSubmit" class="btn btn-outline-success" @onclick="submitAll">Подтвердить</button>  
 
 </div>
 <div id="result">
@@ -468,51 +477,6 @@
     class Error
     {
         public string Details { get; set; } = "";
-    }
-
-    void Submit2()
-    {
-        listEducation.Add(education);
-    }
-
-    void Submit3()
-    {
-        listJobs.Add(job);
-    }
-
-    void Submit5()
-    {
-        listDocuments.Add(document);
-    }
-
-    void AddEducation()
-    {
-        listEducation.Add(education);
-        education = new EducationsDto();
-        foreach (var education in listEducation)
-        {
-            message += education.Type;
-        }
-    }
-
-    void AddJob()
-    {
-        listJobs.Add(job);
-        job = new JobsDto();
-        foreach (var job in listJobs)
-        {
-            message += job.Position;
-        }
-    }
-
-    void AddDocument()
-    {
-        listDocuments.Add(document);
-        document = new DocumentsDto();
-        foreach (var document in listDocuments)
-        {
-            message += document.DocumentName;
-        }
     }
 
     InformationDto info = new InformationDto();
