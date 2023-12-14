@@ -67,7 +67,8 @@
             </EditForm>
         </div>
         <div id="element">
-            <EditForm Model="@education" OnSubmit="@(e=>listEducation.Add(education))">
+            <EditForm Model="@education" OnSubmit="@(e=>{listEducation.Add(education);
+                education = new EducationsDto();})">
                 <p>
                     <b>Образование</b>
                 </p>
@@ -84,17 +85,11 @@
                     <InputDate id="number" @bind-Value="education.Date" class="form-control" />
                 </p>
                 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-                <button type="button" class="btn btn-secondary btn-sm"
-                @onclick="@(e=>{
-                    listEducation.Add(education);
-                    education = new EducationsDto();
-                    })">
-                    Добавить еще
-                </button>
             </EditForm>
         </div>
         <div id="element">
-            <EditForm Model="@job" OnSubmit="@(e=>listJobs.Add(job))">
+            <EditForm Model="@job" OnSubmit="@(e=>{listJobs.Add(job);
+                job = new JobsDto();})">
                 <p>
                     <b>Опыт работы</b>
                 </p>
@@ -107,13 +102,6 @@
                     <InputText id="organization" @bind-Value="job.Organization" class="form-control" />
                 </p>
                 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-                <button type="button" class="btn btn-secondary btn-sm"
-                @onclick="@(e=>{
-                    listJobs.Add(job);
-                    job = new JobsDto();
-                    })">
-                    Добавить еще
-                </button>
             </EditForm>
         </div>
         <div id="element">
@@ -136,7 +124,8 @@
     </div>
     <div id="edit_form">
         <div id="element">
-            <EditForm Model="@document" OnSubmit="@(e=>listDocuments.Add(document))">
+            <EditForm Model="@document" OnSubmit="@(e=>{listDocuments.Add(document);
+                    document=new DocumentsDto();})">
                 <p>
                     <b>Документы</b>
                 </p>
@@ -149,13 +138,6 @@
                     <InputText id="number" @bind-Value="document.DocumentNumber" class="form-control" />
                 </p>
                 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-                <button type="button" class="btn btn-secondary btn-sm"
-                @onclick="@(e=>{
-                    listDocuments.Add(document);
-                    document = new DocumentsDto();
-                    })">
-                    Добавить еще
-                </button>
             </EditForm>
         </div>
         <div id="element">
@@ -279,6 +261,10 @@
                     <td> Дата окончания </td>
                     <td>@education.Date.ToString("dd/MM/yyyy")</td>
                 </tr>
+                <button type="button" id="btnSubmit" class="btn btn-secondary btn-sm"
+                @onclick="@(e=>listEducation.Remove(education))">
+                    Удалить
+                </button>
             }
         </tbody>
         <thead>

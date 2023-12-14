@@ -75,9 +75,9 @@ else
         <tbody>
             @foreach (var education in individual.EducationsDtOs)
             {
-                <tr>
-                    <td colspan="2"> Образование №@(educationCount++) </td>
-                </tr>
+                    <tr align="center">
+                        <td colspan="2">  *** </td>
+                    </tr>
                 <tr>
                     <td> Тип образования </td>
                     <td>@education.Type</td>
@@ -100,9 +100,9 @@ else
         <tbody>
             @foreach (var job in individual.JobsDtOs)
             {
-                <tr>
-                        <td colspan="2">  №@(jobsCount++) </td>
-                </tr>
+                    <tr align="center">
+                        <td colspan="2">  *** </td>
+                    </tr>
                 <tr>
                     <td> Должность </td>
                     <td>@job.Position</td>
@@ -140,8 +140,8 @@ else
         <tbody>
             @foreach (var document in individual.DocumentsDtOs)
             {
-                <tr>
-                        <td colspan="2">  №@(documentsCount++) </td>
+                <tr align="center">
+                        <td colspan="2">  *** </td>
                 </tr>
                 <tr>
                     <td> Тип документа </td>
